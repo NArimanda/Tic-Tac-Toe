@@ -21,10 +21,11 @@
             else if(name=='O'){
                 gameArray[a][b]='O'
             }
+            
         }
 
         this.checkVictory = function(name){
-            let storeVariable = false;
+
 
             //check for rows
             for (let i=0; i<3; i++){
@@ -35,8 +36,8 @@
                         counter+=1
                     }
                     if (counter ==3){
-                        storeVariable = true;
-                        break;
+                        return true;
+
                     }
 
                     
@@ -54,14 +55,33 @@
                     }
                     
                     if (counter ==3){
-                        storeVariable = true;
-                        break;
+                        return true;
+
                     }
 
                 }
             }
 
-            console.log(storeVariable)
+            //check diagonals
+            if(gameArray[0][0] == name && gameArray[1][1]==name && gameArray[2][2] ==name){
+                return true;
+            } 
+            if(gameArray[0][2]==name && gameArray[1][1] ==name && gameArray[2][0]==name){
+                return true;
+            }
+            
+
+            return false;
+        }
+    }
+
+    const player = function(name){
+        this.name = name;
+        this.askCoordinates = function(){
+             return prompt('Please enter coordinates:')
+        }
+        this.endGame = function(){
+            alert(`${this.name} won`)
         }
     }
 
@@ -69,12 +89,29 @@
 
     GameFlow.gameDisplay()
 
-    GameFlow.updateArray('1 1', 'X')
-    GameFlow.updateArray('1 0', 'X')
-    GameFlow.updateArray('1 2', 'X')
-    GameFlow.gameDisplay()
+    //instantiate the two players
+    const Player_x = new player('X')
+    const Player_O = new player('O')
 
-    GameFlow.checkVictory('X');
+
+    while(true){
+        GameFlow.updateArray(Player_x.askCoordinates(), Player_x.name)
+        GameFlow.gameDisplay()
+
+        if (GameFlow.checkVictory(Player_x.name)){
+            Player_x.endGame()
+            break;
+        }
+
+        GameFlow.updateArray(Player_O.askCoordinates(), Player_O.name)
+        GameFlow.gameDisplay()
+
+        if (GameFlow.checkVictory(Player_O.name)){
+            Player_O.endGame()
+            break;
+        }
+        
+    }
     
 
 })()
