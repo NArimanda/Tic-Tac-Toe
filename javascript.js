@@ -8,6 +8,19 @@
             }
         }
 
+        this.checkDraw = function(){
+            for(item of gameArray){
+                for (x of item){
+                    if (x == '_'){
+
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         this.updateArray = function(slider, name){
 
             let a = slider[0]
@@ -86,6 +99,7 @@
              }
              return klein;
         }
+
         this.endGame = function(){
             alert(`${this.name} won`)
         }
@@ -109,6 +123,12 @@
             break;
         }
 
+
+        if (GameFlow.checkDraw()){
+            console.log('DRAW')
+            break;
+        }
+
         GameFlow.updateArray(Player_O.askCoordinates(), Player_O.name)
         GameFlow.gameDisplay()
 
@@ -116,6 +136,7 @@
             Player_O.endGame()
             break;
         }
+
         
     }
     
