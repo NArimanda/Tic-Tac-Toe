@@ -8,8 +8,8 @@
             }
         }
 
-        this.updateArray = function(inpt, name){
-            let slider = inpt.split(' ')
+        this.updateArray = function(slider, name){
+
             let a = slider[0]
             let b = slider[1]
 
@@ -78,7 +78,13 @@
     const player = function(name){
         this.name = name;
         this.askCoordinates = function(){
-             return prompt('Please enter coordinates:')
+             let kiln = prompt('Please enter coordinates:')
+             let klein = kiln.split(' ')
+             while(gameArray[klein[0]][klein[1]] != '_'){
+                kiln = prompt('Try again:')
+                klein = kiln.split(' ')
+             }
+             return klein;
         }
         this.endGame = function(){
             alert(`${this.name} won`)
