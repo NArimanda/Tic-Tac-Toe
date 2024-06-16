@@ -1,7 +1,7 @@
 (function(){
     let gameArray = [['_', '_', '_'],['_', '_', '_'],['_', '_', '_']]
     let boxes = document.querySelectorAll('td')
-    console.log(boxes)
+
 
 
     const gameflow = function(){
@@ -29,7 +29,7 @@
             let a = slider[0]
             let b = slider[1]
 
-            console.log(`${a}, ${b}`)
+
 
             if (name == 'X'){
                 gameArray[a][b] ='X'
@@ -47,7 +47,7 @@
             for (let i=0; i<3; i++){
                 let counter =0;
                 for (let j=0; j<3; j++){
-                    console.log(gameArray[i][j])
+
                     if (gameArray[i][j] == name){
                         counter+=1
                     }
@@ -65,7 +65,7 @@
             for (let i=0; i<3; i++){
                 let counter =0;
                 for (let j=0; j<3; j++){
-                    console.log(gameArray[j][i])
+
                     if (gameArray[j][i] == name){
                         counter+=1
                     }
@@ -95,8 +95,8 @@
 
     const player = function(name){
         this.name = name;
-        this.askCoordinates = function(){
-             let kiln = prompt('Please enter coordinates:')
+        this.askCoordinates = function(kiln){
+             
              let klein = kiln.split(' ')
              while(gameArray[klein[0]][klein[1]] != '_'){
                 kiln = prompt('Try again:')
@@ -122,19 +122,20 @@
     currentplayer = Player_x
 
     for (box of boxes){
-        console.log(box)
+
         box.addEventListener('click', (box) => {
             
-            
-            GameFlow.updateArray(String(box.target.id).split(' '), currentplayer.name)
+            let x = currentplayer.askCoordinates(String(box.target.id))
+            GameFlow.updateArray(x, currentplayer.name)
             GameFlow.gameDisplay()
+
             if (GameFlow.checkVictory(currentplayer.name)){
                 currentplayer.endGame()
                 return
             }
-            
+
             if (GameFlow.checkDraw()){
-                currentplayer.endGame()
+                console.log('DRAW')
                 return
             }
 
