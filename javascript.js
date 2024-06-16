@@ -1,5 +1,7 @@
-(function(){
+let gameLoop = (function(){
     let gameArray = [['_', '_', '_'],['_', '_', '_'],['_', '_', '_']]
+    
+
     let boxes = document.querySelectorAll('td')
 
     let h3 = document.querySelector('h3')
@@ -118,6 +120,7 @@
         this.askCoordinates = function(kiln){
              
              let klein = kiln.split(' ')
+
              while(gameArray[klein[0]][klein[1]] != '_'){
                 kiln = prompt('Try again:')
                 klein = kiln.split(' ')
@@ -143,7 +146,7 @@
     currentplayer = Player_x
     isDone = false
     for (box of boxes){
-
+        box.innerText = '!'
         box.addEventListener('click', (box) => {
             if(isDone == false){
             let x = currentplayer.askCoordinates(String(box.target.id))
@@ -183,4 +186,3 @@
     
 
 })()
-
