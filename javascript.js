@@ -1,6 +1,9 @@
 (function(){
     let gameArray = [['_', '_', '_'],['_', '_', '_'],['_', '_', '_']]
-    
+    let boxes = document.querySelectorAll('td')
+    console.log(boxes)
+
+
     const gameflow = function(){
         this.gameDisplay = function(){
             for(row of gameArray){
@@ -88,6 +91,8 @@
         }
     }
 
+    
+
     const player = function(name){
         this.name = name;
         this.askCoordinates = function(){
@@ -101,7 +106,7 @@
         }
 
         this.endGame = function(){
-            alert(`${this.name} won`)
+            console.log(`${this.name} won`)
         }
     }
 
@@ -114,31 +119,38 @@
     const Player_O = new player('O')
 
 
-    while(true){
-        GameFlow.updateArray(Player_x.askCoordinates(), Player_x.name)
-        GameFlow.gameDisplay()
+    currentplayer = Player_x
 
-        if (GameFlow.checkVictory(Player_x.name)){
-            Player_x.endGame()
-            break;
-        }
+    for (box of boxes){
+        console.log(box)
+        box.addEventListener('click', (box) => {
+            
+            
+            GameFlow.updateArray(String(box.target.id).split(' '), currentplayer.name)
+            GameFlow.gameDisplay()
+            if (GameFlow.checkVictory(currentplayer.name)){
+                currentplayer.endGame()
+                return
+            }
+            
+            if (GameFlow.checkDraw()){
+                currentplayer.endGame()
+                return
+            }
 
-
-        if (GameFlow.checkDraw()){
-            console.log('DRAW')
-            break;
-        }
-
-        GameFlow.updateArray(Player_O.askCoordinates(), Player_O.name)
-        GameFlow.gameDisplay()
-
-        if (GameFlow.checkVictory(Player_O.name)){
-            Player_O.endGame()
-            break;
-        }
-
+            if(currentplayer == Player_x){
+                currentplayer = Player_O
+            }
+            else{
+                currentplayer = Player_x
+            }
         
+        })
     }
+
+    
+
+
     
 
 })()
