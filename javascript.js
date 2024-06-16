@@ -127,6 +127,7 @@
             
             let x = currentplayer.askCoordinates(String(box.target.id))
             GameFlow.updateArray(x, currentplayer.name)
+            document.getElementById(x.join(' ')).innerText = String(currentplayer.name)
             GameFlow.gameDisplay()
 
             if (GameFlow.checkVictory(currentplayer.name)){
