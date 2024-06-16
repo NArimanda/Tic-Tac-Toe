@@ -2,6 +2,7 @@
     let gameArray = [['_', '_', '_'],['_', '_', '_'],['_', '_', '_']]
     let boxes = document.querySelectorAll('td')
 
+    let h3 = document.querySelector('h3')
 
 
     const gameflow = function(){
@@ -52,6 +53,12 @@
                         counter+=1
                     }
                     if (counter ==3){
+                        let text =`${i} ${j}`
+                        let text2 = `${i} ${j-1}`
+                        let text3 = `${i} ${j-2}`
+                        document.getElementById(text).style.backgroundColor = 'red'
+                        document.getElementById(text2).style.backgroundColor = 'red'
+                        document.getElementById(text3).style.backgroundColor = 'red'
                         return true;
 
                     }
@@ -71,7 +78,14 @@
                     }
                     
                     if (counter ==3){
-                        return true;
+
+                        let text =`${j} ${i}`
+                        let text2 = `${j-1} ${i}`
+                        let text3 = `${j-2} ${i}`
+                        document.getElementById(text).style.backgroundColor = 'red'
+                        document.getElementById(text2).style.backgroundColor = 'red'
+                        document.getElementById(text3).style.backgroundColor = 'red'
+                        return true
 
                     }
 
@@ -80,9 +94,15 @@
 
             //check diagonals
             if(gameArray[0][0] == name && gameArray[1][1]==name && gameArray[2][2] ==name){
+                document.getElementById('0 0').style.backgroundColor = 'red'
+                document.getElementById('1 1').style.backgroundColor = 'red'
+                document.getElementById('2 2').style.backgroundColor = 'red'
                 return true;
             } 
             if(gameArray[0][2]==name && gameArray[1][1] ==name && gameArray[2][0]==name){
+                document.getElementById('0 2').style.backgroundColor = 'red'
+                document.getElementById('1 1').style.backgroundColor = 'red'
+                document.getElementById('2 0').style.backgroundColor = 'red'
                 return true;
             }
             
@@ -107,6 +127,7 @@
 
         this.endGame = function(){
             console.log(`${this.name} won`)
+            h3.innerText = `${this.name} has won`
         }
     }
 
@@ -120,11 +141,11 @@
 
 
     currentplayer = Player_x
-
+    isDone = false
     for (box of boxes){
 
         box.addEventListener('click', (box) => {
-            
+            if(isDone == false){
             let x = currentplayer.askCoordinates(String(box.target.id))
             GameFlow.updateArray(x, currentplayer.name)
             document.getElementById(x.join(' ')).innerText = String(currentplayer.name)
@@ -132,21 +153,27 @@
 
             if (GameFlow.checkVictory(currentplayer.name)){
                 currentplayer.endGame()
+                isDone = true
                 return
             }
 
             if (GameFlow.checkDraw()){
                 console.log('DRAW')
+                h3.innerText = 'Draw'
+                
+                isDone = true
                 return
             }
 
             if(currentplayer == Player_x){
                 currentplayer = Player_O
+                h3.innerText = `O's turn`
             }
             else{
                 currentplayer = Player_x
+                h3.innerText = `X's turn`
             }
-        
+        }
         })
     }
 
@@ -156,3 +183,4 @@
     
 
 })()
+
